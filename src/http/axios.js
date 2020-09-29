@@ -4,9 +4,11 @@ import {Toast} from 'vant'
 import router from '../router'
 
 // 全局配置
-// axios.defaults.baseURL = 'http://47.93.255.92:6677';
 
- axios.defaults.baseURL = 'http://localhost:6677';
+ axios.defaults.baseURL = 'http://47.106.244.1:5588';
+// axios.defaults.baseURL = 'http://116.62.174.65:6677';
+
+
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {

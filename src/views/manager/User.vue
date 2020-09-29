@@ -2,8 +2,16 @@
   <div class="user">
     <div class="header">
       <div class="photo">
-        <img src="../../assets/user.png" alt=""/>
+        <!-- 头像 -->
+        <van-image
+          round
+          width="8em"
+          height="8em"
+          :src="info.avatar"
+          fit="cover"
+        />
       </div>
+      <!-- 顾客名称 -->
       <div class="name">{{info.name}}</div>
     </div>
     <van-cell title="地址管理" is-link to="address" />
@@ -30,7 +38,7 @@ export default {
   },
   computed:{
     ...mapState("user",["info"])
-  }
+  },
 }
 </script>
 

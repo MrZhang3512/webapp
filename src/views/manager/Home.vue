@@ -2,7 +2,13 @@
 <!--  header-->
   <div class="home">
     <header class="header">
-      <img src="../../assets/home.jpg" alt="">
+      <!-- 轮播图 -->
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" loop touchable>
+        <van-swipe-item v-for="(i,index) in categories" :key="index">
+          <img :src="i.icon"/>
+        </van-swipe-item>
+      </van-swipe>
+      <!-- /轮播图 -->
     </header>
    <!-- content -->
    <!-- 分类6个 -->
@@ -36,7 +42,7 @@ export default {
   created(){
     //查询栏目信息
     this.loadCategories();
-    //查询chanp
+    //查询产品
     this.loadProducts();
   },
   methods:{
@@ -75,7 +81,7 @@ export default {
   padding-bottom: 50px;
 }
 .header {
-  height: 300px;
+  height: 250px;
   overflow: hidden;
 }
 .header img {

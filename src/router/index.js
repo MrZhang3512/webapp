@@ -33,7 +33,7 @@ const routes = [
         // 查询info
         store.dispatch('user/info',token)
         .then(()=>{
-          // 当获取万用户信息之后才允许跳转
+          // 当获取用户信息之后才允许跳转
           next();
         })
       } else {

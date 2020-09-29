@@ -1,17 +1,16 @@
 <template>
     <div>
         <briup-fulllayout title="地址管理">
-<span>用户名:{{this.info.name}}</span>
-<br>
-        <van-list>
-        <van-cell
-            v-for="item in addresses"
-            :key="item.id"
-            :title="item.province+' '+item.city+' '+item.area+' '+item.address"
-        />
-        </van-list>
-        <br>
-        <van-button block type="default" @click="toAddressEditHander">添加地址</van-button>
+        <!-- 地址列表 -->
+        <van-address-list
+            v-model="chosenAddressId"
+            :list="addresses"
+            :switchable="false"
+            @add="toAddressEditHander"
+            @edit="toEdit"
+            @select="toSelect"
+            />
+        <!-- /地址列表 -->
         </briup-fulllayout>
     </div>
 </template>
@@ -21,7 +20,9 @@ import {mapState} from 'vuex'
 export default {
     data(){
         return{
-      addresses: []
+            addresses: [],
+            //地址默认id 
+            chosenAddressId:"",
         }
     },
     methods:{
@@ -30,12 +31,31 @@ export default {
       let id=this.info.id;
       let url="/address/findByCustomerId?id="+id;
       get(url).then((response)=>{
-        //将查询结果，数组中的前六个拿处理
-        this.addresses=response.data;
+        response.data.forEach(item=>{
+            //将返回的地址信息进行处理
+            item.id = item.id;
+            item.name = this.info.name;
+            item.tel = item.telephone;
+            item.addressDetail = item.address;
+            item.address = item.province+item.city+item.area+item.address;
+        });
+        this.addresses = response.data;
+        //将第一个地址设置为默认地址
+        this.chosenAddressId = this.addresses[0].id;
       })
     },
+    //添加地址
     toAddressEditHander(){
         this.$router.push("/manager/address_edit")
+    },
+    //编辑地址
+    toEdit(item){
+        //通过路由传参将当前行的信息传递
+        this.$router.push({path:"/manager/address_edit",query:{address:item}})
+    },
+    //切换地址
+    toSelect(item,index){
+        this.chosenAddressId = item.id;
     }
 },
 created(){
